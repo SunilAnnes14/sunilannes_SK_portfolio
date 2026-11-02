@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="amber">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inside the Machine // Sunil Annes S K - AI & Data Science</title>
+  <meta name="description" content="Portfolio of Sunil Annes S K, B.Tech Artificial Intelligence and Data Science student. Themed as a retro amber CRT computer running SK-Linux 1.0 LTS.">
+
+  <!-- Google Fonts: VT323 (CRT phosphor text), Press Start 2P (Pixel headings), Share Tech Mono (Terminal telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+
+  <!-- External CDNs: GSAP & Three.js (No build step required) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Phosphor Block Cursor Following Mouse -->
+  <div id="phosphorCursor" class="phosphor-block-cursor"></div>
+
+  <!-- CRT Monitor Physical Outer Chassis -->
+  <div class="crt-outer-chassis">
+    <!-- CRT Curved Screen Bezel Container -->
+    <div class="crt-screen-bezel">
+
+      <!-- Global CRT Overlays: Scanlines & Phosphor Flicker -->
+      <div class="crt-scanlines"></div>
+      <div class="crt-flicker"></div>
+
+      <!-- CRT Transition Layer Overlays -->
+      <div id="transitionOverlay" class="crt-transition-overlay">
+        <div id="shutdownLine" class="crt-shutdown-line"></div>
+        <div id="scanlineBeam" class="scanline-wipe-beam"></div>
+        <canvas id="staticNoiseCanvas"></canvas>
+      </div>
+
+      <!-- Top System Status & Navigation Bar -->
+      <header class="crt-topbar">
+        <div class="topbar-left">
+          <div class="os-badge">
+            <span class="os-led"></span>
+            <span>SK-LINUX 1.0 LTS</span>
+          </div>
+          <span class="sys-stat dim-text">[ TENSOR-INFERENCE: ONLINE ]</span>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="crt-nav" aria-label="Main Navigation">
+          <button class="nav-btn active btn-bracket" data-page="boot" data-label="[1:BOOT]">
+            <span class="key-hint">1:</span>[ BOOT ]
+          </button>
+          <button class="nav-btn btn-bracket" data-page="whoami" data-label="[2:WHOAMI]">
+            <span class="key-hint">2:</span>[ WHOAMI ]
+          </button>
+          <button class="nav-btn btn-bracket" data-page="cartridges" data-label="[3:CARTRIDGES]">
+            <span class="key-hint">3:</span>[ CARTRIDGES ]
+          </button>
+          <button class="nav-btn btn-bracket" data-page="transmit" data-label="[4:TRANSMIT]">
+            <span class="key-hint">4:</span>[ TRANSMIT ]
+          </button>
+        </nav>
+
+        <!-- Topbar Right System Controls -->
+        <div class="topbar-right">
+          <!-- Hidden Terminal / CLI Trigger -->
+          <button id="topbarCliBtn" class="ctrl-btn btn-scramble" title="Open Shell Terminal (or press ~)">
+            [ CLI ]
+          </button>
+
+          <!-- Transition Effect Switcher -->
+          <button id="transitionToggleBtn" class="ctrl-btn" title="Toggle Page Transition FX">
+            [ FX: CRT ]
+          </button>
+
+          <!-- Audio Mute/Unmute Switch -->
+          <button id="soundToggleBtn" class="ctrl-btn" title="Toggle Vintage Sound Effects">
+            [ SOUND: OFF ]
+          </button>
+
+          <!-- Phosphor Theme Switcher: Amber / Green / White -->
+          <div class="theme-dropdown" title="Change Phosphor Color">
+            <button class="theme-btn active" data-theme="amber">AMB</button>
+            <button class="theme-btn" data-theme="green">GRN</button>
+            <button class="theme-btn" data-theme="white">WHT</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main CRT Viewport & 4 App Sections -->
+      <main class="crt-viewport">
+
+        <!-- ================================================================
+             PAGE 1: BOOT (HOME)
+             ================================================================ -->
+        <section id="page-boot" class="page-section active-page" aria-labelledby="heroName">
+          <div class="boot-container">
+
+            <!-- BIOS POST Boot Text Card -->
+            <div id="biosPostCard" class="bios-post-card">
+              <div class="bios-line"><span>SK-BIOS v3.42 (C) 1988-2026 SUNIL ANNES S K SYSTEMS INC.</span></div>
+              <div class="bios-line"><span>CPU: SYNAPSE-64 NEURAL MATRIX PROCESSOR @ 3.80GHz</span></div>
+              <div class="bios-line"><span>CHECKING MEMORY: 65,536 KB SYSTEM RAM ......... [ OK ]</span></div>
+              <div class="bios-line"><span>DETECTING VIRTUAL AI CARTRIDGE BAY ........... [ 5 SLOTS READY ]</span></div>
+              <div class="bios-line"><span>INITIALIZING SK-KERNEL 1.0 LTS ............... [ OK ]</span></div>
+              <div class="bios-line"><span>STARTING TENSOR COMPUTE ENGINE ............... [ ACTIVE ]</span></div>
+            </div>
+
+            <!-- Hero Main Layout: Dithered Portrait + Scanline + Intro -->
+            <div class="hero-main-layout">
+              <!-- Left: Dithered Portrait Frame with Fax-style Scanner Line -->
+              <div class="portrait-crt-frame">
+                <img id="portraitImg" src="assets/portrait.jpg" alt="Portrait of Sunil Annes S K" class="portrait-img">
+                <div class="fax-scanner-line"></div>
+                <div class="portrait-meta">
+                  <span>TELEMETRY: RAW</span>
+                  <span>SYS//ID: SUNIL.DS</span>
+                </div>
+              </div>
+
+              <!-- Right: Hero Typography & Actions -->
+              <div class="hero-content">
+                <h1 id="heroName" class="hero-headline bright-text">SUNIL ANNES S K</h1>
+                <h2 id="heroBio" class="hero-subhead glow-text">Hi there, I'm Sunil</h2>
+
+                <ul id="heroBullets" class="hero-bullets">
+                  <li class="hero-bullet-item"><span class="bullet-bracket">[+]</span> AI & Data Science Student</li>
+                  <li class="hero-bullet-item"><span class="bullet-bracket">[+]</span> Aspiring ML Engineer</li>
+                </ul>
+
+                <!-- Action Button Row -->
+                <div class="hero-action-row">
+                  <button class="crt-btn btn-phosphor-fill" onclick="app.navigateTo('whoami')">
+                    [ EXPLORE WHOAMI ]
+                  </button>
+                  <button class="crt-btn btn-mechanical" onclick="app.navigateTo('cartridges')">
+                    [ VIEW 3D CARTRIDGES ]
+                  </button>
+                  <button class="crt-btn btn-scramble" onclick="app.navigateTo('transmit')">
+                    [ TRANSMIT SIGNAL ]
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI / Data Science Feature: Real-Time Animated Loss Curve Widget -->
+            <div class="training-widget-card">
+              <div class="training-header">
+                <div>
+                  <span class="bright-text">ACTIVE MODEL TRAINING:</span>
+                  <span class="dim-text" style="font-family:var(--font-mono); font-size:14px; margin-left:8px;">
+                    ResNet-AI-Portfolio // Optimizer: AdamW (lr=3e-4)
+                  </span>
+                </div>
+                <span class="training-badge">EPOCH <span id="trainEpoch">1/100</span></span>
+              </div>
+
+              <div class="training-canvas-wrapper">
+                <canvas id="trainingCanvas"></canvas>
+              </div>
+
+              <div class="training-metrics-row">
+                <span>LOSS: <b id="trainLoss">2.4500</b></span>
+                <span>VAL_ACC: <b id="trainAcc">65.0%</b></span>
+                <span>DEVICE: <b>CUDA:0 (Tensor Core)</b></span>
+                <span>STATUS: <b>CONVERGING GRADIENTS</b></span>
+              </div>
+            </div>
+
+            <!-- Boot Footer Status Line -->
+            <div class="boot-footer-bar">
+              <span>Welcome to SK-Linux 1.0 LTS</span>
+              <span>Scroll or type 'help' to get started [Press 1-4 for Fast Nav]</span>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 2: WHOAMI (ABOUT)
+             ================================================================ -->
+        <section id="page-whoami" class="page-section" aria-labelledby="whoamiTitle">
+          <div class="whoami-container">
+
+            <!-- Terminal Lead Command -->
+            <div class="cmd-line-lead">
+              <span class="prompt">sunil@sk-linux:~$</span> whoami
+              <p id="whoamiBioText" class="dim-text" style="margin-top:6px; font-family:var(--font-mono); font-size:16px;">
+                Sunil Annes S K, B.Tech Artificial Intelligence and Data Science student.
+              </p>
+            </div>
+
+            <div class="whoami-grid">
+              <!-- Left Column: Neofetch System Info Panel -->
+              <div class="neofetch-panel">
+                <h3 class="section-title">
+                  <span>[ NEOFETCH // SYSTEM INFO ]</span>
+                  <span class="dim-text" style="font-size:14px;">x86_64</span>
+                </h3>
+
+                <div class="neofetch-content">
+                  <div class="neofetch-ascii">
+      .---.       
+     /     \      
+    | () () |     
+     \  _  /      
+      /   \       
+     |     |      
+    /|     |\     
+   (_|     |_)    
+     |_____|      
+    /_______\     
+                  </div>
+
+                  <div id="neofetchDetails" class="neofetch-details">
+                    <!-- Populated dynamically from PORTFOLIO_DATA.neofetch -->
+                  </div>
+                </div>
+
+                <div class="color-blocks-row">
+                  <span style="color:#000000">██</span>
+                  <span style="color:#ffb000">██</span>
+                  <span style="color:#33ff33">██</span>
+                  <span style="color:#00f0ff">██</span>
+                  <span style="color:#ff33bb">██</span>
+                  <span style="color:#ffffff">██</span>
+                </div>
+              </div>
+
+              <!-- Right Column: Skills Download-Style Progress Bars -->
+              <div class="skills-card">
+                <h3 class="section-title">
+                  <span>[ TECHNICAL PROFICIENCY MATRIX ]</span>
+                  <span class="dim-text" style="font-size:14px;">VERIFIED</span>
+                </h3>
+
+                <div id="skillsList" class="skills-list">
+                  <!-- Populated dynamically from PORTFOLIO_DATA.skills -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Education & Achievements Timeline -->
+            <div class="timeline-card">
+              <h3 class="section-title">
+                <span>[ CHRONOLOGICAL LOGS & ACHIEVEMENTS ]</span>
+                <span class="dim-text" style="font-size:14px;">B.TECH AI & DS</span>
+              </h3>
+
+              <div id="timelineTree" class="timeline-tree">
+                <!-- Populated dynamically from PORTFOLIO_DATA.timeline -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 3: CARTRIDGES (PROJECTS & THREE.JS SHELF)
+             ================================================================ -->
+        <section id="page-cartridges" class="page-section" aria-labelledby="cartridgesTitle">
+          <div class="cartridges-page-container">
+
+            <div class="cartridges-header-row">
+              <h2 id="cartridgesTitle" class="bright-text" style="font-size:24px;">
+                [ 3D PROJECT ARCHIVE // VIRTUAL CARTRIDGES ]
+              </h2>
+              <div class="cartridge-drive-status">
+                <span class="slot-active-indicator"></span>
+                <span>DRIVE-01: MOUNTED</span>
+              </div>
+            </div>
+
+            <!-- 3D Three.js Cartridge Shelf Viewport -->
+            <div id="cartridgeCanvasWrapper" class="cartridge-stage-wrapper">
+              <canvas id="cartridgeCanvas"></canvas>
+
+              <!-- Shelf Controls Overlay -->
+              <div class="shelf-overlay-controls">
+                <div class="shelf-hint">
+                  HOVER TO TILT • CLICK TO INSERT CARTRIDGE
+                </div>
+                <div class="shelf-controls-group">
+                  <button id="shelfPrevBtn" class="ctrl-btn btn-mechanical">&lt; PREV</button>
+                  <button id="shelfNextBtn" class="ctrl-btn btn-mechanical">NEXT &gt;</button>
+                  <button id="shelfEjectBtn" class="ctrl-btn btn-scramble">[ EJECT ]</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2D Quick Slot Switcher (Mobile & Touch Accessibility) -->
+            <div id="quickSlotBar" class="quick-slot-bar">
+              <!-- Populated dynamically by cartridges.js -->
+            </div>
+
+            <!-- Active Cartridge Project Detail HUD -->
+            <div id="projectHudDisplay" class="project-hud-display">
+              <div class="project-hud-header">
+                <div>
+                  <h3 id="hudProjectTitle" class="project-hud-title">Project Title</h3>
+                </div>
+                <span id="hudAccentTag" class="project-accent-tag">ROM-01 // AMBER</span>
+              </div>
+
+              <p id="hudProjectDesc" class="project-desc-text">
+                Project description will load dynamically as cartridges are clicked and inserted into the console drive.
+              </p>
+
+              <div class="project-meta-grid">
+                <div>
+                  <div class="dim-text" style="font-family:var(--font-mono); font-size:13px; margin-bottom:4px;">
+                    STACK ARCHITECTURE:
+                  </div>
+                  <div id="hudTechTags" class="tech-tags-list"></div>
+                </div>
+                <div id="hudMetrics" class="metrics-highlight">
+                  TELEMETRY: 95% Accuracy
+                </div>
+              </div>
+
+              <div class="project-actions-row">
+                <a id="hudRepoBtn" href="#" target="_blank" rel="noopener noreferrer" class="crt-btn btn-phosphor-fill">
+                  [ GITHUB REPOSITORY ]
+                </a>
+                <a id="hudDemoBtn" href="#" target="_blank" rel="noopener noreferrer" class="crt-btn btn-mechanical">
+                  [ LIVE ARCHIVE DEMO ]
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================================================================
+             PAGE 4: TRANSMIT (CONTACT & MODEM CONSOLE)
+             ================================================================ -->
+        <section id="page-transmit" class="page-section" aria-labelledby="transmitTitle">
+          <div class="transmit-container">
+
+            <!-- Modem Telemetry Banner -->
+            <div class="modem-telemetry-banner">
+              <div>
+                <span class="bright-text">MODEM UPLINK CONSOLE</span>
+                <span class="dim-text" style="margin-left:8px;">[ BAUD: 14400 bps / FSK ]</span>
+              </div>
+              <div class="telemetry-lights">
+                <div class="tele-light"><span class="tele-dot on"></span> CD (Carrier Detect)</div>
+                <div class="tele-light"><span class="tele-dot on"></span> TX (Transmit)</div>
+                <div class="tele-light"><span class="tele-dot"></span> RX (Receive)</div>
+                <div class="tele-light"><span class="tele-dot on"></span> DTR (Terminal Ready)</div>
+              </div>
+            </div>
+
+            <div class="transmit-layout-grid">
+              <!-- Left Column: Terminal Contact Form -->
+              <div class="terminal-form-card">
+                <h3 class="section-title">
+                  <span>[ TRANSMIT PACKET // CONTACT SUNIL ]</span>
+                  <span class="dim-text" style="font-size:14px;">ENCRYPTED</span>
+                </h3>
+
+                <form id="terminalContactForm">
+                  <div class="form-field-group">
+                    <label for="contactName" class="form-label">&gt; TRANSMITTER_CALLSIGN (Name):</label>
+                    <input type="text" id="contactName" class="terminal-input" placeholder="e.g. Recruiter / Collaborator" required>
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="contactEmail" class="form-label">&gt; RETURN_FREQUENCY (Email):</label>
+                    <input type="email" id="contactEmail" class="terminal-input" placeholder="e.g. team@company.com" required>
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="contactMsg" class="form-label">&gt; PAYLOAD_DATA (Message):</label>
+                    <textarea id="contactMsg" class="terminal-textarea" placeholder="Input message or project proposal..." required></textarea>
+                  </div>
+
+                  <button type="submit" id="submitTransmissionBtn" class="crt-btn btn-mechanical" style="width:100%; margin-top:8px;">
+                    [ TRANSMIT PACKET ]
+                  </button>
+                </form>
+
+                <!-- Transmission Status Box & Signal Bar -->
+                <div id="transmissionStatusBox" class="transmission-status-box">
+                  <div class="signal-strength-bar">
+                    <div id="signalFill" class="signal-fill"></div>
+                  </div>
+                  <div id="packetLog" class="packet-log"></div>
+                </div>
+              </div>
+
+              <!-- Right Column: RF Visualizer & Hardware Ports (Social Links) -->
+              <div class="ports-console-card">
+                <h3 class="section-title">
+                  <span>[ RF OSCILLOSCOPE & PORTS ]</span>
+                  <span class="dim-text" style="font-size:14px;">14.4 kHz</span>
+                </h3>
+
+                <!-- RF Waveform Visualizer Canvas -->
+                <div class="rf-visualizer-box">
+                  <canvas id="rfCanvas"></canvas>
+                </div>
+
+                <div class="dim-text" style="font-size:16px; margin-top:2px;">
+                  SELECT I/O PORT TO CONNECT PHYSICAL CABLE:
+                </div>
+
+                <!-- Hardware Ports List -->
+                <div id="portsList" class="ports-list">
+                  <!-- Populated dynamically from PORTFOLIO_DATA.socialPorts -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Bottom System Status Strip -->
+      <footer class="crt-bottombar">
+        <div class="bottombar-left">
+          <span>&copy; 1988-2026 Sunil Annes S K</span>
+          <span class="dim-text">|</span>
+          <span class="dim-text">SK-Linux 1.0 LTS</span>
+          <span class="dim-text">|</span>
+          <span class="dim-text">[ Type 'help' anywhere for CLI ]</span>
+        </div>
+        <div class="bottombar-right">
+          <span id="systemMemUsage" class="dim-text">RAM: 42.4%</span>
+          <span class="dim-text">|</span>
+          <span id="systemClock">00:00:00 UTC</span>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Hidden Shell Command Line Terminal Modal -->
+  <div id="terminalModal" class="terminal-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="termModalTitle">
+    <div class="terminal-window">
+      <div class="terminal-titlebar">
+        <span id="termModalTitle">SKSH SHELL // ROOT CONSOLE [~]</span>
+        <button id="terminalCloseBtn" class="ctrl-btn">[ X ]</button>
+      </div>
+      <div id="terminalOutput" class="terminal-body"></div>
+      <div class="term-input-row">
+        <span class="term-prompt">sunil@sk-linux:~$</span>
+        <input type="text" id="terminalInput" class="term-input-field" autocomplete="off" spellcheck="false" placeholder="type 'help' or 'sudo hire sunil'...">
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules in Strict Dependency Order -->
+  <script src="js/content.js"></script>
+  <script src="js/buttons.js"></script>
+  <script src="js/transitions.js"></script>
+  <script src="js/cartridges.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
