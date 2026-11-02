@@ -149,7 +149,7 @@ const PORTFOLIO_DATA = {
       metrics: "Sub-50ms Sync via Convex | 60 FPS Three.js Canvas",
       tech: ["React 19", "Three.js", "TypeScript", "Convex DB", "Tailwind v4", "Framer Motion"],
       repoLink: "https://github.com/SunilAnnes14/kolly-guess-game",
-      demoLink: "https://github.com/SunilAnnes14/kolly-guess-game"
+      demoLink: "https://attividuuu.vercel.app/"
     },
     {
       id: "cartridge-4",
@@ -163,6 +163,7 @@ const PORTFOLIO_DATA = {
       tech: ["Angular", "Node.js", "Express", "MongoDB", "REST API", "TypeScript"],
       repoLink: "https://github.com/SunilAnnes14/movie-review-system",
       demoLink: "https://github.com/SunilAnnes14/movie-review-system"
+      
     },
     {
       id: "cartridge-5",
